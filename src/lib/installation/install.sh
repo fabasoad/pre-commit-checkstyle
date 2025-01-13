@@ -1,32 +1,21 @@
 #!/usr/bin/env sh
 
-download_checkstyle() {
+download_checkstyle_config_path() {
   version="${1}"
-  os="$(uname -s)"
-  arch="$(uname -m)"
-  ext=$([ "${os}" = "Linux" ] && echo "tar.gz" || echo "zip")
-  if [ "${os}" = "Darwin" ]; then
-    os="macOS"
-    arch="${arch}"
-  else
-    os=$([ "${os}" = "Linux" ] && echo "linux" || echo "windows")
-    arch=$([ "${arch}" = "aarch64" ] && echo "arm64" || echo "amd64")
-  fi
-  filename="checkstyle_${version}_${os}_${arch}"
-  url="https://github.com/${_UPSTREAM_FULL_REPO_NAME}/releases/download/v${version}/${filename}.${ext}"
-  output_filename="checkstyle.${ext}"
-  curl -qsL "${url}" -o "${CONFIG_CACHE_APP_BIN_DIR}/${output_filename}"
-  if [ "${ext}" = "zip" ]; then
-    unzip -qq "${CONFIG_CACHE_APP_BIN_DIR}/${output_filename}" -d "${CONFIG_CACHE_APP_BIN_DIR}"
-    mv "${CONFIG_CACHE_APP_BIN_DIR}/${filename}/bin/checkstyle" "${CONFIG_CACHE_APP_BIN_DIR}"
-    rm -rf "${CONFIG_CACHE_APP_BIN_DIR}/${filename}"
-  else
-    tar -xzf "${CONFIG_CACHE_APP_BIN_DIR}/${output_filename}" -C "${CONFIG_CACHE_APP_BIN_DIR}" --strip-components 2
-  fi
-  rm -f "${CONFIG_CACHE_APP_BIN_DIR}/${output_filename}"
+  config_type="${2}"
+  url="https://raw.githubusercontent.com/${_UPSTREAM_FULL_REPO_NAME}/refs/tags/checkstyle-${version}/src/main/resources/${config_type}_checks.xml"
+  checkstyle_config_path="${CONFIG_CACHE_APP_DIR}/${config_type}_checks.xml"
+  curl -qsL "${url}" -o "${checkstyle_config_path}"
+  echo "${checkstyle_config_path}"
 }
 
-install() {
+download_checkstyle() {
+  version="${1}"
+  url="https://github.com/${_UPSTREAM_FULL_REPO_NAME}/releases/download/checkstyle-${version}/checkstyle-${version}-all.jar"
+  curl -qsL "${url}" -o "${CONFIG_CACHE_APP_BIN_DIR}/checkstyle.jar"
+}
+
+install_checkstyle() {
   if [ -f "${CONFIG_CACHE_APP_BIN_DIR}" ]; then
     err_msg="${CONFIG_CACHE_APP_BIN_DIR} existing file prevents from creating"
     err_msg="${err_msg} a cache directory with the same name. Please remove"
