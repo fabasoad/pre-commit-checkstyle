@@ -2,5 +2,5 @@
 set -u
 
 checkstyle_custom() {
-  checkstyle_common "custom" ". $@"
+  checkstyle_common "" ". $@"
 }

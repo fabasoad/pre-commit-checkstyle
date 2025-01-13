@@ -13,17 +13,10 @@ checkstyle_common() {
   checkstyle_version=$(java -jar ${checkstyle_path} --version | cut -d ' ' -f 3)
 
   # Download config if needed
-  case "${config_type}" in
-    google)
-      checkstyle_config_path="$(install_checkstyle_config_path "${checkstyle_version}" "google")"
-      checkstyle_args="${checkstyle_args} -c ${checkstyle_config_path}"
-      ;;
-    sun)
-      checkstyle_config_path="$(install_checkstyle_config_path "${checkstyle_version}" "sun")"
-      checkstyle_args="${checkstyle_args} -c ${checkstyle_config_path}"
-      ;;
-    *)
-  esac
+  if [ -n "${config_type}" ]; then
+    checkstyle_config_path="$(install_checkstyle_config_path "${checkstyle_version}" "${config_type}")"
+    checkstyle_args="${checkstyle_args} -c ${checkstyle_config_path}"
+  fi
 
   fabasoad_log "info" "Checkstyle path: ${checkstyle_path}"
   fabasoad_log "info" "Checkstyle version: ${checkstyle_version}"
