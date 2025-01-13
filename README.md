@@ -16,13 +16,13 @@
   - [How it works?](#how-it-works)
   - [Prerequisites](#prerequisites)
   - [Hooks](#hooks)
-    - [checkstyle-custom](#checkstyle-custom)
+    - [checkstyle](#checkstyle)
     - [checkstyle-google](#checkstyle-google)
     - [checkstyle-sun](#checkstyle-sun)
   - [Customization](#customization)
     - [Description](#description)
     - [Parameters](#parameters)
-      - [Checkstyle](#checkstyle)
+      - [Checkstyle](#checkstyle-parameters)
       - [pre-commit-checkstyle](#pre-commit-checkstyle)
         - [Log level](#log-level)
         - [Log color](#log-color)
@@ -56,7 +56,7 @@ hook:
 > `<rev>` in the examples below, is the latest revision tag from [fabasoad/pre-commit-checkstyle](https://github.com/fabasoad/pre-commit-checkstyle/releases)
 > repository.
 
-### checkstyle-custom
+### checkstyle
 
 This hook runs `checkstyle` without specifying config file. Config file parameter
 is required and must be specified by the user:
@@ -66,7 +66,7 @@ repos:
   - repo: https://github.com/fabasoad/pre-commit-checkstyle
     rev: <rev>
     hooks:
-      - id: checkstyle-custom
+      - id: checkstyle
         args:
           - --checkstyle-args=-c config.xml
 ```
@@ -111,7 +111,7 @@ but not `--hook-args <arg>`. Please find [Examples](#examples) for more details.
 
 ### Parameters
 
-#### Checkstyle
+#### Checkstyle Parameters
 
 You can [install](https://github.com/checkstyle/checkstyle?tab=readme-ov-file#quick-start)
 `checkstyle.jar` locally and run `java -jar checkstyle.jar --help` to see all the
@@ -251,7 +251,7 @@ repos:
   - repo: https://github.com/fabasoad/pre-commit-checkstyle
     rev: <rev>
     hooks:
-      - id: checkstyle-custom
+      - id: checkstyle
         args:
           - --hook-args=--log-level debug
           - --checkstyle-args=-c config.xml
@@ -265,7 +265,7 @@ repos:
   - repo: https://github.com/fabasoad/pre-commit-checkstyle
     rev: <rev>
     hooks:
-      - id: checkstyle-custom
+      - id: checkstyle
         args:
           - --hook-args=--log-level debug
           - --checkstyle-args=-c config.xml --debug

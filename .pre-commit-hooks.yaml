@@ -1,12 +1,12 @@
 ---
-- id: checkstyle-custom
+- id: checkstyle
   name: Checkstyle
   description: |
     Checkstyle verifies that the specified source code files adhere to the specified
     rules. By default, violations are reported to standard out in plain format.
     This hook requires a configuration XML file that configures the checks to
     apply.
-  entry: src/main.sh "checkstyle-custom"
+  entry: src/main.sh "checkstyle"
   language: script
   pass_filenames: false
   verbose: true
