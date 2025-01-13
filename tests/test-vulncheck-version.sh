@@ -59,9 +59,9 @@ test_checkstyle_version_env_var() {
 
 main() {
   echo "Testing $(basename "$0")..."
-  test_checkstyle_version_param_precedence "checkstyle-google" "0.8.4" "0.8.5" "0.8.4"
-  test_checkstyle_version_param_precedence "checkstyle-google" "0.8.5" "0.8.4" "0.8.5"
-  test_checkstyle_version_env_var "checkstyle-google" "0.8.4"
+  test_checkstyle_version_param_precedence "checkstyle-google" "10.21.0" "10.21.1" "10.21.0"
+  test_checkstyle_version_param_precedence "checkstyle-google" "10.21.1" "10.21.0" "10.21.1"
+  test_checkstyle_version_env_var "checkstyle-google" "10.21.0"
   echo "[PASS] Total 3 tests passed\n"
 }
 
