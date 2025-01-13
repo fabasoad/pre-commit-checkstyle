@@ -9,17 +9,17 @@ checkstyle_common() {
   checkstyle_args="$(echo "${2}" | sed 's/ *$//')"
 
   # Install checkstyle
-  checkstyle_path="$(install_checkstyle)"
+  checkstyle_path="$(install_checkstyle "${PRE_COMMIT_CHECKSTYLE_CHECKSTYLE_VERSION}")"
   checkstyle_version=$(java -jar ${checkstyle_path} --version | cut -d ' ' -f 3)
 
   # Download config if needed
   case "${config_type}" in
     google)
-      checkstyle_config_path="$(download_checkstyle_config_path "${checkstyle_version}" "google")"
+      checkstyle_config_path="$(install_checkstyle_config_path "${checkstyle_version}" "google")"
       checkstyle_args="${checkstyle_args} -c ${checkstyle_config_path}"
       ;;
     sun)
-      checkstyle_config_path="$(download_checkstyle_config_path "${checkstyle_version}" "sun")"
+      checkstyle_config_path="$(install_checkstyle_config_path "${checkstyle_version}" "sun")"
       checkstyle_args="${checkstyle_args} -c ${checkstyle_config_path}"
       ;;
     *)
