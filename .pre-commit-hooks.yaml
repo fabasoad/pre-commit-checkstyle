@@ -1,0 +1,34 @@
+---
+- id: checkstyle-custom
+  name: Checkstyle
+  description: |
+    Checkstyle verifies that the specified source code files adhere to the specified
+    rules. By default, violations are reported to standard out in plain format.
+    This hook requires a configuration XML file that configures the checks to
+    apply.
+  entry: src/main.sh "checkstyle-custom"
+  language: script
+  pass_filenames: false
+  verbose: true
+
+- id: checkstyle-google
+  name: Checkstyle
+  description: |
+    Checkstyle verifies that the specified source code files adhere to the specified
+    rules. By default, violations are reported to standard out in plain format.
+    This hook does not require a configuration XML file.
+  entry: src/main.sh "checkstyle-google"
+  language: script
+  pass_filenames: false
+  verbose: true
+
+- id: checkstyle-sun
+  name: Checkstyle
+  description: |
+    Checkstyle verifies that the specified source code files adhere to the specified
+    rules. By default, violations are reported to standard out in plain format.
+    This hook does not require a configuration XML file.
+  entry: src/main.sh "checkstyle-sun"
+  language: script
+  pass_filenames: false
+  verbose: true
