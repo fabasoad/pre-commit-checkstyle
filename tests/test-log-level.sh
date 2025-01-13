@@ -14,7 +14,7 @@ test_log_level_param_precedence() {
 
   output=$(PRE_COMMIT_CHECKSTYLE_LOG_LEVEL="${log_level_env_var}" \
     ${SRC_DIR}/main.sh "${command}" \
-    "--checkstyle-args=--debug --hook-args=--log-level=${log_level_cmd}" \
+    "--hook-args=--log-level=${log_level_cmd}" \
     2>&1 >/dev/null)
 
   actual=$(echo "${output}" | grep "debug")
@@ -40,7 +40,7 @@ test_log_level_env_var() {
 
   output=$(PRE_COMMIT_CHECKSTYLE_LOG_LEVEL="${log_level_env_var}" \
     ${SRC_DIR}/main.sh "${command}" \
-    "--checkstyle-args=--debug" \
+    "" \
     2>&1 >/dev/null)
 
   actual=$(echo "${output}" | grep "debug")

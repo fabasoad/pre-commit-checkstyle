@@ -16,7 +16,7 @@ _import_all() {
 main() {
   _import_all
 
-  cmd_checkstyle_custom="checkstyle-custom"
+  cmd_checkstyle="checkstyle"
   cmd_checkstyle_google="checkstyle-google"
   cmd_checkstyle_sun="checkstyle-sun"
 
@@ -42,7 +42,7 @@ main() {
   set -u
 
   case "${cmd_actual}" in
-    "${cmd_checkstyle_custom}")
+    "${cmd_checkstyle}")
       checkstyle_custom "${all_args_map["checkstyle-args"]}"
       ;;
     "${cmd_checkstyle_google}")
