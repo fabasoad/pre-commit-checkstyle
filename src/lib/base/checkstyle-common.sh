@@ -11,6 +11,7 @@ checkstyle_common() {
   checkstyle_args="${checkstyle_args} --exclude=.fabasoad"
 
   # Install checkstyle
+  echo ">>>>>>>> ${PRE_COMMIT_CHECKSTYLE_CHECKSTYLE_VERSION}" >&2
   checkstyle_path="$(install_checkstyle "${PRE_COMMIT_CHECKSTYLE_CHECKSTYLE_VERSION}")"
   checkstyle_version=$(java -jar ${checkstyle_path} --version | cut -d ' ' -f 3)
 
