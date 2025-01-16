@@ -4,8 +4,8 @@ _fetch_latest_version() {
   response=$(curl -sL -X GET \
     -w "%{http_code}" \
     "https://api.github.com/repos/${_UPSTREAM_FULL_REPO_NAME}/releases/latest")
-  data=$(echo "${response}" | head -n 1)
-  status_code=$(echo "${response}" | head -n 2)
+  data=$(echo "${response}"| sed -n '1p')
+  status_code=$(echo "${response}" | sed -n '2p')
   if [ "${status_code}" -ne 200 ]; then
     msg="Failed to fetch latest release. Status code: ${status_code}."
     if [ "$(echo "${data}" | jq 'has("message")')" = "true" ]; then
