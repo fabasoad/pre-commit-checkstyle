@@ -7,6 +7,8 @@ checkstyle_common() {
   # Removing trailing space (sed command) is needed here in case there were no
   # --checkstyle-args passed, so that $1 in this case is "scan . "
   checkstyle_args="$(echo "${2}" | sed 's/ *$//')"
+  # Exclude cache root directory
+  checkstyle_args="${checkstyle_args} --exclude=.fabasoad"
 
   # Install checkstyle
   checkstyle_path="$(install_checkstyle "${PRE_COMMIT_CHECKSTYLE_CHECKSTYLE_VERSION}")"
