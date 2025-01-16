@@ -51,6 +51,7 @@ install_checkstyle() {
     fabasoad_log "debug" "Checkstyle is found at ${checkstyle_path}. Installation skipped"
   else
     if [ "${version}" = "latest" ]; then
+      echo ">>>> ${_UPSTREAM_FULL_REPO_NAME}" >&2
       version="$(curl -s "https://api.github.com/repos/${_UPSTREAM_FULL_REPO_NAME}/releases/latest" \
         | grep '"tag_name":' \
         | sed -E 's/.*"([^"]+)".*/\1/' \
