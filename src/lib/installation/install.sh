@@ -1,5 +1,25 @@
 #!/usr/bin/env sh
 
+_fetch_latest_version() {
+  response=$(curl -sL -X GET \
+    -w "%{http_code}" \
+    "https://api.github.com/repos/${_UPSTREAM_FULL_REPO_NAME}/releases/latest")
+  data=$(echo "${response}" | head -n 1)
+  status_code=$(echo "${response}" | head -n 2)
+  if [ "${status_code}" -ne 200 ]; then
+    msg="Failed to fetch latest release. Status code: ${status_code}."
+    if [ "$(echo "${data}" | jq 'has("message")')" = "true" ]; then
+      msg="${msg} Reason: $(echo "${data}" | jq -r '.message')."
+    fi
+    msg="${msg} Using default value: ${CONFIG_CHECKSTYLE_VERSION_BACKUP_VAL}."
+    fabasoad_log "warning" "${msg}"
+    version="${CONFIG_CHECKSTYLE_VERSION_BACKUP_VAL}"
+  else
+    version="$(echo "${data}" | jq -r '.tag_name' | sed 's/checkstyle-//')"
+  fi
+  echo "${version}"
+}
+
 _download_checkstyle_config_path() {
   version="${1}"
   config_type="${2}"
@@ -17,10 +37,7 @@ install_checkstyle_config_path() {
     fabasoad_log "debug" "Config is found at ${checkstyle_config_path}. Installation skipped"
   else
     if [ "${version}" = "latest" ]; then
-      version="$(curl -s "https://api.github.com/repos/${_UPSTREAM_FULL_REPO_NAME}/releases/latest" \
-        | grep '"tag_name":' \
-        | sed -E 's/.*"([^"]+)".*/\1/' \
-        | sed 's/checkstyle-//')"
+      version="$(_fetch_latest_version)"
     fi
     fabasoad_log "debug" "Config is not found. Downloading ${config_filename}..."
     _download_checkstyle_config_path "${version}" "${config_type}" "${checkstyle_config_path}"
@@ -51,11 +68,7 @@ install_checkstyle() {
     fabasoad_log "debug" "Checkstyle is found at ${checkstyle_path}. Installation skipped"
   else
     if [ "${version}" = "latest" ]; then
-      echo ">>>> ${_UPSTREAM_FULL_REPO_NAME}" >&2
-      version="$(curl -s "https://api.github.com/repos/${_UPSTREAM_FULL_REPO_NAME}/releases/latest" \
-        | grep '"tag_name":' \
-        | sed -E 's/.*"([^"]+)".*/\1/' \
-        | sed 's/checkstyle-//')"
+      version="$(_fetch_latest_version)"
     fi
     fabasoad_log "debug" "Checkstyle is not found. Downloading checkstyle ${version}..."
     _download_checkstyle "${version}" "${checkstyle_path}"
