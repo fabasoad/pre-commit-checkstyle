@@ -7,8 +7,8 @@ _fetch_latest_version() {
     -H "Accept: application/vnd.github+json" \
     -H "X-GitHub-Api-Version: 2022-11-28" \
     "${url}")
-  data=$(echo "${response}"| sed -n '1p')
-  status_code=$(echo "${response}" | sed -n '2p')
+  data=$(echo "${response}" | sed '$d')
+  status_code=$(echo "${response}" | tail -n 1)
   if [ "${status_code}" -eq 200 ]; then
     version="$(echo "${data}" | jq -r '.tag_name' | sed 's/checkstyle-//')"
   else
