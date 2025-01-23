@@ -1,12 +1,17 @@
 #!/usr/bin/env sh
 
 _fetch_latest_version() {
+  url="https://api.github.com/repos/${_UPSTREAM_FULL_REPO_NAME}/releases/latest"
   response=$(curl -sL -X GET \
     -w "%{http_code}" \
-    "https://api.github.com/repos/${_UPSTREAM_FULL_REPO_NAME}/releases/latest")
-  data=$(echo "${response}"| sed -n '1p')
-  status_code=$(echo "${response}" | sed -n '2p')
-  if [ "${status_code}" -ne 200 ]; then
+    -H "Accept: application/vnd.github+json" \
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    "${url}")
+  data=$(echo "${response}" | sed '$d')
+  status_code=$(echo "${response}" | tail -n 1)
+  if [ "${status_code}" -eq 200 ]; then
+    version="$(echo "${data}" | jq -r '.tag_name' | sed 's/checkstyle-//')"
+  else
     msg="Failed to fetch latest release. Status code: ${status_code}."
     if [ "$(echo "${data}" | jq 'has("message")')" = "true" ]; then
       msg="${msg} Reason: $(echo "${data}" | jq -r '.message')."
@@ -14,8 +19,6 @@ _fetch_latest_version() {
     msg="${msg} Using default value: ${CONFIG_CHECKSTYLE_VERSION_BACKUP_VAL}."
     fabasoad_log "warning" "${msg}"
     version="${CONFIG_CHECKSTYLE_VERSION_BACKUP_VAL}"
-  else
-    version="$(echo "${data}" | jq -r '.tag_name' | sed 's/checkstyle-//')"
   fi
   echo "${version}"
 }
