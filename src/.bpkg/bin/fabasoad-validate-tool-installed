@@ -22,7 +22,7 @@ _fail() {
 fabasoad_validate_tool_installed() {
   if ! command -v "${1}" &> /dev/null; then
     msg=""
-    if [ -n "${2}" ]; then
+    if [ -n "${2:-""}" ]; then
       msg="${msg}\"${2}\" parameter is invalid. "
     fi
     printf "%s\"%s\" is not installed on the current machine.\n" "${msg}" "${1}" >&2

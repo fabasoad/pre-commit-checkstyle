@@ -22,7 +22,7 @@ _fail() {
 fabasoad_validate_file_exists() {
   if [ ! -f "${1}" ]; then
     msg=""
-    if [ -n "${2}" ]; then
+    if [ -n "${2:-""}" ]; then
       msg="${msg}\"${2}\" parameter is invalid. "
     fi
     printf "%s\"%s\" is not a file or does not exist.\n" "${msg}" "${1}" >&2

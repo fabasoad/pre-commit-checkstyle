@@ -33,7 +33,7 @@ fabasoad_validate_semver() {
 
   if ! [[ "${1}" =~ ^($D)\.($D)\.($D)(-(($D|$PW)(\.($D|$PW))*))?(\+($MW(\.$MW)*))?$ ]]; then
     msg=""
-    if [ -n "${2}" ]; then
+    if [ -n "${2:-""}" ]; then
       msg="${msg}\"${2}\" parameter is invalid. "
     fi
     printf "%s\"%s\" is not a valid semver.\n" "${msg}" "${1}" >&2

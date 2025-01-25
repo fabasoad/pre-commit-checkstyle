@@ -17,7 +17,6 @@ _import_all() {
 _validate_prerequisites() {
   validate_tool_installed "jq"
   validate_tool_installed "curl"
-  validate_tool_installed "abc"
 }
 
 main() {
@@ -60,7 +59,7 @@ main() {
       checkstyle_sun "${all_args_map["checkstyle-args"]}"
       ;;
     *)
-      validate_enum "hook" "${cmd_actual}" "${cmd_checkstyle_scan}"
+      validate_enum "${cmd_actual}" "${cmd_checkstyle},${cmd_checkstyle_google},${cmd_checkstyle_sun}"
       ;;
   esac
 }

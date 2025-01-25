@@ -27,7 +27,7 @@ fabasoad_validate_enum() {
       ;;
     *)
       msg=""
-      if [ -n "${3}" ]; then
+      if [ -n "${3:-""}" ]; then
         msg="${msg}\"${3}\" parameter is invalid. "
       fi
       printf "%s\"%s\" is invalid. Possible values: %s.\n" "${msg}" "${1}" "$(echo "${2}" | sed 's/,/, /g')" >&2
