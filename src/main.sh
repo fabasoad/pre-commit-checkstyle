@@ -13,8 +13,15 @@ _import_all() {
   done
 }
 
+# Validate that all needed dependencies are installed on the machine
+_validate_prerequisites() {
+  validate_tool_installed "jq" "jq"
+  validate_tool_installed "curl" "curl"
+}
+
 main() {
   _import_all
+  _validate_prerequisites
 
   cmd_checkstyle="checkstyle"
   cmd_checkstyle_google="checkstyle-google"

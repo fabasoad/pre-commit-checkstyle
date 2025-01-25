@@ -1,10 +1,18 @@
 #!/usr/bin/env bash
 
+# Validates value to be a valid semver string.
+# Parameters:
+# 1. (Required) Param name to display it correctly in the error message for the
+#    users.
+# 2. (Required) Param value that will be validated.
+#
+# Usage examples:
+# fabasoad_validate_semver "my-valid-semver-1" "1.2.3"
+# fabasoad_validate_semver "my-valid-semver-2" "1.2.3-rc-1"
+#
+# Reference:
 # Validation logic is taken from https://github.com/semver/semver/issues/981
 fabasoad_validate_semver() {
-  param_key="${1}"
-  param_val="${2}"
-
   # Regex for a semver digit
   D='0|[1-9][0-9]*'
   # Regex for a semver pre-release word
@@ -12,8 +20,8 @@ fabasoad_validate_semver() {
   # Regex for a semver build-metadata word
   MW='[0-9a-zA-Z-]+'
 
-  if ! [[ "${param_val}" =~ ^($D)\.($D)\.($D)(-(($D|$PW)(\.($D|$PW))*))?(\+($MW(\.$MW)*))?$ ]]; then
-    printf "\"%s\" parameter is invalid. \"%s\" is not a valid semver.\n" "${param_key}" "${param_val}" >&2
+  if ! [[ "${2}" =~ ^($D)\.($D)\.($D)(-(($D|$PW)(\.($D|$PW))*))?(\+($MW(\.$MW)*))?$ ]]; then
+    printf "\"%s\" parameter is invalid. \"%s\" is not a valid semver.\n" "${1}" "${2}" >&2
     exit 1
   fi
 }

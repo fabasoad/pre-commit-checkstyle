@@ -21,3 +21,7 @@ validate_enum() {
 validate_semver() {
   _run_validator "fabasoad_validate_semver" "$@"
 }
+
+validate_tool_installed() {
+  _run_validator "fabasoad_validate_tool_installed" "$@"
+}

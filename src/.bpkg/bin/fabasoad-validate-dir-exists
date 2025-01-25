@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
 
+# Validates that passed value is a path to an existing directory.
+# Parameters:
+# 1. (Required) Param name to display it correctly in the error message for the
+#    users.
+# 2. (Required) Param value that will be validated.
+#
+# Usage example:
+# fabasoad_validate_dir_exists "my-dir-param" "/usr/local/my-dir"
 fabasoad_validate_dir_exists() {
-  param_key="${1}"
-  param_val="${2}"
-  if [ ! -d "${param_val}" ]; then
-    printf "\"%s\" parameter is invalid. \"%s\" is not a directory or does not exist.\n" "${param_key}" "${param_val}" >&2
+  if [ ! -d "${2}" ]; then
+    printf "\"%s\" parameter is invalid. \"%s\" is not a directory or does not exist.\n" "${1}" "${2}" >&2
     exit 1
   fi
 }

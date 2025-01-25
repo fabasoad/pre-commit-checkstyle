@@ -1,14 +1,21 @@
 #!/usr/bin/env bash
 
+# Validates string to be one of the possible values (emulating enum data type).
+# Parameters:
+# 1. (Required) Param name to display it correctly in the error message for the
+#    users.
+# 2. (Required) Param value that will be validated.
+# 3. (Required) Possible values for the param value to be valid.
+#
+# Usage examples:
+# fabasoad_validate_enum "my-bool-param" "true" "true,false"
+# fabasoad_validate_enum "my-days-of-week-param" "wed" "mon,tue,wed,thu,fri,sat,sun"
 fabasoad_validate_enum() {
-  param_key="${1}"
-  param_val="${2}"
-  enum_opts="${3},"
-  case ",${enum_opts}" in
-    *",${param_val},"*)
+  case ",${3}," in
+    *",${2},"*)
       ;;
     *)
-      printf "\"%s\" parameter is invalid. Possible values: %s.\n" "${param_key}" "$(echo "${enum_opts%,}" | sed 's/,/, /g')" >&2
+      printf "\"%s\" parameter is invalid. Possible values: %s.\n" "${1}" "$(echo "${3}" | sed 's/,/, /g')" >&2
       exit 1
       ;;
   esac
