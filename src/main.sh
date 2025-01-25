@@ -15,8 +15,9 @@ _import_all() {
 
 # Validate that all needed dependencies are installed on the machine
 _validate_prerequisites() {
-  validate_tool_installed "jq" "jq"
-  validate_tool_installed "curl" "curl"
+  validate_tool_installed "jq"
+  validate_tool_installed "curl"
+  validate_tool_installed "abc"
 }
 
 main() {
