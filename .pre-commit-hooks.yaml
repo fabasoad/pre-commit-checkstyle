@@ -16,7 +16,7 @@
   description: |
     Checkstyle verifies that the specified source code files adhere to the specified
     rules. By default, violations are reported to standard out in plain format.
-    This hook does not require a configuration XML file.
+    This hook does not require a configuration XML file as it uses Google config.
   entry: src/main.sh "checkstyle-google"
   language: script
   pass_filenames: false
@@ -27,7 +27,7 @@
   description: |
     Checkstyle verifies that the specified source code files adhere to the specified
     rules. By default, violations are reported to standard out in plain format.
-    This hook does not require a configuration XML file.
+    This hook does not require a configuration XML file as it uses Sun config.
   entry: src/main.sh "checkstyle-sun"
   language: script
   pass_filenames: false

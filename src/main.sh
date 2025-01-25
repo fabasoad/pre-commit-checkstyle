@@ -13,8 +13,15 @@ _import_all() {
   done
 }
 
+# Validate that all needed dependencies are installed on the machine
+_validate_prerequisites() {
+  validate_tool_installed "jq"
+  validate_tool_installed "curl"
+}
+
 main() {
   _import_all
+  _validate_prerequisites
 
   cmd_checkstyle="checkstyle"
   cmd_checkstyle_google="checkstyle-google"
@@ -52,7 +59,7 @@ main() {
       checkstyle_sun "${all_args_map["checkstyle-args"]}"
       ;;
     *)
-      validate_enum "hook" "${cmd_actual}" "${cmd_checkstyle_scan}"
+      validate_enum "${cmd_actual}" "${cmd_checkstyle},${cmd_checkstyle_google},${cmd_checkstyle_sun}"
       ;;
   esac
 }

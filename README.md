@@ -8,9 +8,6 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- TOC -->
 - [Checkstyle pre-commit hooks](#checkstyle-pre-commit-hooks)
   - [Table of Contents](#table-of-contents)
   - [How it works?](#how-it-works)
@@ -30,24 +27,22 @@
         - [Clean cache](#clean-cache)
     - [Examples](#examples)
   - [Contributions](#contributions)
-<!-- TOC -->
-
-<!-- prettier-ignore-end -->
 
 ## How it works?
 
 At first hook tries to use globally installed [checkstyle](https://github.com/checkstyle/checkstyle)
-CLI. And if it doesn't exist then hook installs `checkstyle.jar` into a
+jar file. And if it doesn't exist then hook installs `checkstyle.jar` into a
 `.fabasoad/pre-commit-checkstyle` temporary directory that will be removed after
 scanning is completed.
 
 ## Prerequisites
 
-The following tools have to be available on a runner prior using this pre-commit
+The following tools have to be available on a machine prior using this pre-commit
 hook:
 
 - [bash >=4.0](https://www.gnu.org/software/bash/)
 - [curl](https://curl.se/)
+- [jq](https://jqlang.github.io/jq/)
 
 ## Hooks
 
