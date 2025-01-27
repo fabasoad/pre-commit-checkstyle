@@ -116,7 +116,7 @@ available arguments:
 
 ```shell
 $ java -jar checkstyle.jar --version
-Checkstyle version: 10.21.1
+Checkstyle version: 10.21.2
 
 $ java -jar checkstyle.jar --help
 Usage: checkstyle [-dEghjJtTV] [-b=<xpath>] [-c=<configurationFile>] [-f=<format>]
