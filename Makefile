@@ -1,4 +1,4 @@
-.PHONY: build clean test
+.PHONY: install clean test
 
 .DEFAULT_GOAL := install
 
