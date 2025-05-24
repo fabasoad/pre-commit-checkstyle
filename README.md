@@ -221,7 +221,7 @@ is not globally installed, otherwise globally installed `checkstyle` takes prece
 
 - Parameter name: `--checkstyle-version`
 - Environment variable: `PRE_COMMIT_CHECKSTYLE_CHECKSTYLE_VERSION`
-- Possible values: Checkstyle version that you can find [here](https://github.com/checkstyle/checkstyle/releases)
+- Possible values: [Checkstyle version](https://github.com/checkstyle/checkstyle/releases)
 - Default: `latest`
 
 ##### Clean cache
