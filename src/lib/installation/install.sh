@@ -5,7 +5,7 @@ _fetch_latest_version() {
   response=$(curl -sL -X GET \
     -w "%{http_code}" \
     -H "Accept: application/vnd.github+json" \
-    -H "X-GitHub-Api-Version: 2022-11-28" \
+    -H "X-GitHub-Api-Version: 2026-03-10" \
     "${url}")
   data=$(echo "${response}" | sed '$d')
   status_code=$(echo "${response}" | tail -n 1)
