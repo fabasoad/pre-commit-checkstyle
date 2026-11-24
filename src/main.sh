@@ -31,8 +31,29 @@ main() {
   cmd_actual="${1}"
   shift
 
+  # pre-commit passes the files matched by "types: [java]" in
+  # .pre-commit-hooks.yaml as separate arguments that start with neither
+  # --hook-args nor --checkstyle-args. Separate them from the hook and
+  # checkstyle arguments, so that only those files are scanned. If no
+  # files are passed, the current directory is scanned as before.
+  filenames=""
+  hook_checkstyle_args=""
+  for arg in "$@"; do
+    case "${arg}" in
+      --hook-args*|--checkstyle-args*)
+        hook_checkstyle_args="${hook_checkstyle_args} ${arg}"
+        ;;
+      "")
+        ;;
+      *)
+        filenames="${filenames} ${arg}"
+        ;;
+    esac
+  done
+  filenames=$(echo "${filenames}" | sed 's/^ *//')
+
   declare -A all_args_map
-  parse_all_args all_args_map "$(echo "$@" | sed 's/^ *//' | sed 's/ *$//')"
+  parse_all_args all_args_map "$(echo "${hook_checkstyle_args}" | sed 's/^ *//' | sed 's/ *$//')"
   declare -A hook_args_map
   parse_hook_args hook_args_map "${all_args_map["hook-args"]}"
 
@@ -51,13 +72,13 @@ main() {
 
   case "${cmd_actual}" in
     "${cmd_checkstyle}")
-      checkstyle_custom "${all_args_map["checkstyle-args"]}"
+      checkstyle_custom "${all_args_map["checkstyle-args"]}" "${filenames}"
       ;;
     "${cmd_checkstyle_google}")
-      checkstyle_google "${all_args_map["checkstyle-args"]}"
+      checkstyle_google "${all_args_map["checkstyle-args"]}" "${filenames}"
       ;;
     "${cmd_checkstyle_sun}")
-      checkstyle_sun "${all_args_map["checkstyle-args"]}"
+      checkstyle_sun "${all_args_map["checkstyle-args"]}" "${filenames}"
       ;;
     *)
       validate_enum "${cmd_actual}" "${cmd_checkstyle},${cmd_checkstyle_google},${cmd_checkstyle_sun}"

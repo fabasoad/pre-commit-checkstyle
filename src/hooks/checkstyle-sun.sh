@@ -2,5 +2,5 @@
 set -u
 
 checkstyle_sun() {
-  checkstyle_common "sun" ". $@"
+  checkstyle_common "sun" "${1:-}" "${2:-}"
 }

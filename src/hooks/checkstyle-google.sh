@@ -2,5 +2,5 @@
 set -u
 
 checkstyle_google() {
-  checkstyle_common "google" ". $@"
+  checkstyle_common "google" "${1:-}" "${2:-}"
 }

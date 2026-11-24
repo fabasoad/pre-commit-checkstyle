@@ -4,9 +4,16 @@ set -u
 checkstyle_common() {
   # Possible values: custom, google, sun
   config_type="${1}"
+  # Files passed by pre-commit as the 3rd argument are the scan targets.
+  # Fall back to the current directory if no files were passed.
+  scan_targets="${3:-}"
+  if [ -z "${scan_targets}" ]; then
+    scan_targets="."
+  fi
   # Removing trailing space (sed command) is needed here in case there were no
-  # --checkstyle-args passed, so that $1 in this case is "scan . "
-  checkstyle_args="$(echo "${2}" | sed 's/ *$//')"
+  # --checkstyle-args passed, so that the scan targets in this case end with a
+  # trailing space, e.g. "src/Main.java "
+  checkstyle_args="$(echo "${scan_targets} ${2}" | sed 's/ *$//')"
   # Exclude cache root directory
   checkstyle_args="${checkstyle_args} --exclude=.fabasoad"
 
